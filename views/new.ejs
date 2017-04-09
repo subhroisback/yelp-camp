@@ -4,9 +4,18 @@
     <h1>Create a new Campground</h1>
 
     <form class="navbar-form" action="/campground" method="post">
-      <input type="text" class="form-control" name="name" placeholder="name">
-      <input type="text" class="form-control" name="image" placeholder="image">
-      <button type="submit" class="btn btn-default">Submit</button>
+      <div class="input-group input-group-lg">
+        <input type="text" class="form-control" name="name" placeholder="name">
+      </div>
+      <div class="input-group input-group-lg">
+        <input type="text" class="form-control" name="image" placeholder="image">
+      </div>
+      <div class="input-group input-group-lg">
+        <input type="text" class="form-control" name="description" placeholder="description">
+      </div>
+      <div class="input-group input-group-lg">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+      </div>
     </form>
 
     <p><a href="/campground">Go Back</a></p>
