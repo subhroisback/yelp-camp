@@ -9,14 +9,16 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var campgroundSchema = new mongoose.Schema({
-  name : String,
-  image: String
+  name        : String,
+  image       : String,
+  description : String
 });
 var Campground = mongoose.model("Campground",campgroundSchema);
 
 // Campground.create({
 // 	name :"Mountain Hill",
-// 	image:"http://localhost:3000/images/can-female-only-campgrounds-prevent-sexual-assault-at-music-festivals-1457473395.jpg"
+// 	image:"http://localhost:3000/images/camp1.jpg",
+//   description:"This is the Mountain Hill Camp. Beautiful. Big Famous Camp."
 // },function(err,campground){
 // 	if(err){
 // 		console.log(err);
@@ -41,7 +43,7 @@ var Campground = mongoose.model("Campground",campgroundSchema);
 // ];
 
 app.get('/',function(req, res){
-	res.render('index');
+	res.render('home');
 });
 
 app.get('/campground',function(req, res){
@@ -50,18 +52,17 @@ app.get('/campground',function(req, res){
 	    console.log("Oh no Error :");
 	    console.log(err);
 	  }else{
-	    res.render("campground",{campground:allCampgrounds});
+	    res.render("index",{campground:allCampgrounds});
 	  }
 	});
-
-	//res.render("campground",{campground:campground});
 });
 
 app.post('/campground',function(req, res){
 
 	var name = req.body.name;
 	var image = req.body.image;
-	var newCampground = {name: name, image: image};
+  var description = req.body.description;
+	var newCampground = {name: name, image: image, description: description};
 	//campground.push(newCampground);
 	Campground.create(newCampground,function(err,newlyCreated){
 		if(err){
@@ -75,6 +76,16 @@ app.post('/campground',function(req, res){
 
 app.get('/campground/new',function(req,res){
 	res.render("new");
+});
+
+app.get('/campground/:id',function(req, res){
+  Campground.findById(req.params.id,function(err, foundCampground){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("show",{campground:foundCampground});
+    }
+  });
 });
 
 
